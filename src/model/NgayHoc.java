@@ -18,7 +18,7 @@ public class NgayHoc {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Date getNgay_bat_dau() {
+	public Date getDateStart() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Date start = formatter.parse(ngay_bat_dau);
@@ -34,7 +34,15 @@ public class NgayHoc {
 		this.ngay_bat_dau = ngay_bat_dau;
 	}
 
-	public Date getNgay_ket_thuc() {
+	public String getNgay_bat_dau() {
+		return ngay_bat_dau;
+	}
+
+	public String getNgay_ket_thuc() {
+		return ngay_ket_thuc;
+	}
+
+	public Date getDateEnd() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Date end = formatter.parse(ngay_ket_thuc);
@@ -52,18 +60,9 @@ public class NgayHoc {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String str_start = "";
-		String str_end = "";
-		try {
-			Date start = formatter.parse(ngay_bat_dau);
-			Date end = formatter.parse(ngay_ket_thuc);
-			str_start = start.getDate() + "/" + (start.getMonth() + 1);
-			str_end = end.getDate() + "/" + (end.getMonth() + 1);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String str_start = getDateStart().getDate() + "/" + (getDateStart().getMonth() + 1);
+		String str_end = getDateEnd().getDate() + "/" + (getDateEnd().getMonth() + 1);
+
 		return "(" + str_start + " - " + str_end + ")";
 	}
 

@@ -1,11 +1,13 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import model.MonHoc;
 
-public class MonHocService implements GeneralService<MonHoc> {
+public class MonHocService implements GeneralService<MonHoc>, Comparator<MonHoc> {
 
 	private static List<MonHoc> list = new ArrayList<MonHoc>();
 
@@ -24,7 +26,7 @@ public class MonHocService implements GeneralService<MonHoc> {
 		}
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getCa_hoc() == t.getCa_hoc() && list.get(i).getThu_hoc() == t.getThu_hoc()
-					&& list.get(i).getTen().equalsIgnoreCase(t.getTen()) == false) {
+					&& !list.get(i).getTen().equalsIgnoreCase(t.getTen()) && !checkDate(t, list.get(i))) {
 				return 0;
 			} else if (list.get(i).getTen().equalsIgnoreCase(t.getTen())
 					&& list.get(i).getPhong().equalsIgnoreCase(t.getPhong())
@@ -73,18 +75,38 @@ public class MonHocService implements GeneralService<MonHoc> {
 		for (int i = 0; i < index.size(); i++) {
 			if (i == 0) {
 				result += list.get(index.get(i)).toString();
-			} else {
+			} else if (i != 0
+					&& list.get(index.get(i)).getTen().equalsIgnoreCase(list.get(index.get(i - 1)).getTen())) {
 				result += list.get(index.get(i)).getNgayHoc().toString();
+			} else {
+				result += "<br>" + list.get(index.get(i)).toString();
 			}
 		}
 		return result;
 	}
 
-	public int checkDate(MonHoc m1, MonHoc m2) {
-		if (m1.getNgayHoc().getNgay_ket_thuc().getMonth() < m2.getNgayHoc().getNgay_bat_dau().getMonth()
-				|| m1.getNgayHoc().getNgay_bat_dau().getMonth() > m2.getNgayHoc().getNgay_ket_thuc().getMonth()) {
-
+	public boolean checkDate(MonHoc m1, MonHoc m2) {
+		if (m1.getNgayHoc().getDateEnd().getMonth() < m2.getNgayHoc().getDateStart().getMonth()
+				|| (m1.getNgayHoc().getDateEnd().getMonth() == m2.getNgayHoc().getDateStart().getMonth()
+						&& m1.getNgayHoc().getDateEnd().getDate() < m2.getNgayHoc().getDateStart().getDate())) {
+			return true;
+		} else if (m2.getNgayHoc().getDateEnd().getMonth() < m1.getNgayHoc().getDateStart().getMonth()
+				|| (m2.getNgayHoc().getDateEnd().getMonth() == m1.getNgayHoc().getDateStart().getMonth()
+						&& m2.getNgayHoc().getDateEnd().getDate() < m1.getNgayHoc().getDateStart().getDate())) {
+			return true;
+		} else {
+			return false;
 		}
+	}
+
+	@Override
+	public int compare(MonHoc m1, MonHoc m2) {
+		if (m1.getNgayHoc().getDateEnd().getMonth() < m2.getNgayHoc().getDateStart().getMonth()
+				|| (m1.getNgayHoc().getDateEnd().getMonth() == m2.getNgayHoc().getDateStart().getMonth()
+						&& m1.getNgayHoc().getDateEnd().getDate() < m2.getNgayHoc().getDateStart().getDate())) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
