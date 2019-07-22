@@ -80,4 +80,11 @@ public class MonHocService implements GeneralService<MonHoc> {
 		return result;
 	}
 
+	public int checkDate(MonHoc m1, MonHoc m2) {
+		if (m1.getNgayHoc().getNgay_ket_thuc().getMonth() < m2.getNgayHoc().getNgay_bat_dau().getMonth()
+				|| m1.getNgayHoc().getNgay_bat_dau().getMonth() > m2.getNgayHoc().getNgay_ket_thuc().getMonth()) {
+
+		}
+	}
+
 }

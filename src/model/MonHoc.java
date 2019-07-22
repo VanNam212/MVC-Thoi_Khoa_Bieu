@@ -71,7 +71,7 @@ public class MonHoc {
 
 	@Override
 	public String toString() {
-		return ten + " - " + moTa + " - " + phong + "\n" + ngayHoc.toString();
+		return ten + " - " + moTa + " - " + phong + " " + ngayHoc.toString();
 	}
 
 }

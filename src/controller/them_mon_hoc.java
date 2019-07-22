@@ -41,18 +41,18 @@ public class them_mon_hoc extends HttpServlet {
 		// TODO Auto-generated method stub
 		String ten = request.getParameter("ten_mon");
 		String phong = request.getParameter("phong_hoc");
-		String ngay_bat_dau = request.getParameter("start");
-		String ngay_ket_thuc = request.getParameter("end");
 		String mo_ta = request.getParameter("mo_ta");
 		int ca_hoc = Integer.parseInt(request.getParameter("ca"));
 		int thu_hoc = Integer.parseInt(request.getParameter("thu"));
+		String ngay_bat_dau = request.getParameter("start");
+		String ngay_ket_thuc = request.getParameter("end");
 		NgayHoc ngayHoc = new NgayHoc(ngay_bat_dau, ngay_ket_thuc);
-
 		MonHoc monHoc = new MonHoc(ten, phong, ngayHoc, mo_ta, ca_hoc, thu_hoc);
 		int ktra = new MonHocService().create(monHoc);
 		String table = setTable();
 		request.setAttribute("table", table);
 		request.setAttribute("ktra", ktra);
+
 		request.getRequestDispatcher("them-mon-hoc.jsp").forward(request, response);
 	}
 
